@@ -14,9 +14,9 @@ var PolylineTextPath = {
             return;
         }
 
-        var id = '#pathdef-' + L.Util.stamp(this);
+        var id = 'pathdef-' + L.Util.stamp(this);
         var svg = this._map._pathRoot;
-        this._path.setAttribute('id', id.slice(1));
+        this._path.setAttribute('id', id);
 
         if (options.repeat) {
             /* Compute single pattern length */
@@ -34,7 +34,7 @@ var PolylineTextPath = {
         /* Put it along the path using textPath */
         var textNode = L.Path.prototype._createElement('text')
           , textPath = L.Path.prototype._createElement('textPath');
-        textPath.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", id);
+        textPath.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", '#'+id);
         textNode.setAttribute('fill', options.fillColor);
         textNode.setAttribute('dy', this._path.getAttribute('stroke-width')-1);
         textPath.appendChild(document.createTextNode(text));
