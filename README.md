@@ -24,3 +24,8 @@ Screenshot
 ----------
 
 ![screenshot](https://raw.github.com/makinacorpus/Leaflet.TextPath/master/screenshot.png)
+
+Credits
+-------
+
+The main idea comes from Tom Mac Wright's *[Getting serious about SVG](mapbox.com/osmdev/2012/11/20/getting-serious-about-svg/)*
