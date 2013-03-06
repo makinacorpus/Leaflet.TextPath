@@ -9,8 +9,8 @@ var PolylineTextPath = {
           , options = L.Util.extend(defaults, options);
         /* If empty text, hide */
         if (!text) {
-            if (this._textpath)
-                this._map._pathRoot.removeChild(this._textpath);
+            if (this._textNode)
+                this._map._pathRoot.removeChild(this._textNode);
             return;
         }
 
