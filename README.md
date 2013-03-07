@@ -28,4 +28,4 @@ Screenshot
 Credits
 -------
 
-The main idea comes from Tom Mac Wright's *[Getting serious about SVG](mapbox.com/osmdev/2012/11/20/getting-serious-about-svg/)*
+The main idea comes from Tom Mac Wright's *[Getting serious about SVG](http://mapbox.com/osmdev/2012/11/20/getting-serious-about-svg/)*
