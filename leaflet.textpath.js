@@ -11,7 +11,7 @@ var PolylineTextPath = {
         if (!text) {
             if (this._textNode)
                 this._map._pathRoot.removeChild(this._textNode);
-            return;
+            return this;
         }
 
         var id = 'pathdef-' + L.Util.stamp(this);
@@ -41,7 +41,19 @@ var PolylineTextPath = {
         textNode.appendChild(textPath);
         svg.appendChild(textNode);
         this._textNode = textNode;
-    },
+        return this;
+    }
 };
 
 L.Polyline.include(PolylineTextPath);
+
+L.LayerGroup.include({
+    setText: function(text, options) {
+        for (var layer in this._layers) {
+            if (typeof this._layers[layer].setText === 'function') {
+                this._layers[layer].setText(text, options);
+            }
+        }
+        return this;
+    }
+});
