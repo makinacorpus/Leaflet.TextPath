@@ -4,9 +4,25 @@
  */
 
 var PolylineTextPath = {
+
+    __updatePath: L.Polyline.prototype._updatePath,
+
+    _updatePath: function () {
+        this.__updatePath.call(this);
+        var text = this._text,
+            options = this._textOptions;
+        if (text) {
+            this.setText(null).setText(text, options);
+        }
+    },
+
     setText: function (text, options) {
+        this._text = text;
+        this._textOptions = options;
+
         var defaults = {repeat: false, fillColor: 'black', attributes: {}};
         options = L.Util.extend(defaults, options);
+
         /* If empty text, hide */
         if (!text) {
             if (this._textNode)
