@@ -12,7 +12,7 @@ For example, show path orientation on mouse over :
     var layer = L.polyLine(...);
     
     layer.on('mouseover', function () {
-        this.setText('  ►  ', {repeat: true, fillColor: 'red'});
+        this.setText('  ►  ', {repeat: true, attributes: {fill: 'red'}});
     });
 
     layer.on('mouseout', function () {
