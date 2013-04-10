@@ -5,8 +5,8 @@
 
 var PolylineTextPath = {
     setText: function (text, options) {
-        var defaults = {repeat: false, fillColor: 'black'}
-          , options = L.Util.extend(defaults, options);
+        var defaults = {repeat: false, fillColor: 'black'};
+        options = L.Util.extend(defaults, options);
         /* If empty text, hide */
         if (!text) {
             if (this._textNode)
@@ -27,13 +27,12 @@ var PolylineTextPath = {
             svg.removeChild(pattern);
 
             /* Create string as long as path */
-            text = new Array(Math.floor(this._path.getTotalLength() / 
-                                        alength)).join(text);
+            text = new Array(Math.floor(this._path.getTotalLength() / alength)).join(text);
         }
 
         /* Put it along the path using textPath */
-        var textNode = L.Path.prototype._createElement('text')
-          , textPath = L.Path.prototype._createElement('textPath');
+        var textNode = L.Path.prototype._createElement('text'),
+            textPath = L.Path.prototype._createElement('textPath');
         textPath.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", '#'+id);
         textNode.setAttribute('fill', options.fillColor);
         textNode.setAttribute('dy', this._path.getAttribute('stroke-width')-1);
