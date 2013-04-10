@@ -5,7 +5,7 @@
 
 var PolylineTextPath = {
     setText: function (text, options) {
-        var defaults = {repeat: false, fillColor: 'black'};
+        var defaults = {repeat: false, fillColor: 'black', attributes: {}};
         options = L.Util.extend(defaults, options);
         /* If empty text, hide */
         if (!text) {
@@ -21,6 +21,8 @@ var PolylineTextPath = {
         if (options.repeat) {
             /* Compute single pattern length */
             var pattern = L.Path.prototype._createElement('text');
+            for (var attr in options.attributes)
+                pattern.setAttribute(attr, options.attributes[attr]);
             pattern.appendChild(document.createTextNode(text));
             svg.appendChild(pattern);
             var alength = pattern.getComputedTextLength();
@@ -37,8 +39,9 @@ var PolylineTextPath = {
         var dy = options.offset || this._path.getAttribute('stroke-width');
 
         textPath.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", '#'+id);
-        textNode.setAttribute('fill', options.fillColor);
         textNode.setAttribute('dy', dy);
+        for (var attr in options.attributes)
+            textNode.setAttribute(attr, options.attributes[attr]);
         textPath.appendChild(document.createTextNode(text));
         textNode.appendChild(textPath);
         svg.appendChild(textNode);
