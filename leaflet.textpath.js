@@ -30,6 +30,7 @@ var PolylineTextPath = {
             return this;
         }
 
+        text = text.replace(/ /g, '\u00A0');  // Non breakable spaces
         var id = 'pathdef-' + L.Util.stamp(this);
         var svg = this._map._pathRoot;
         this._path.setAttribute('id', id);
@@ -45,7 +46,7 @@ var PolylineTextPath = {
             svg.removeChild(pattern);
 
             /* Create string as long as path */
-            text = new Array(Math.floor(this._path.getTotalLength() / alength)).join(text);
+            text = new Array(Math.ceil(this._path.getTotalLength() / alength)).join(text);
         }
 
         /* Put it along the path using textPath */
