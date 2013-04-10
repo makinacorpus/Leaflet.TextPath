@@ -33,9 +33,12 @@ var PolylineTextPath = {
         /* Put it along the path using textPath */
         var textNode = L.Path.prototype._createElement('text'),
             textPath = L.Path.prototype._createElement('textPath');
+
+        var dy = options.offset || this._path.getAttribute('stroke-width');
+
         textPath.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", '#'+id);
         textNode.setAttribute('fill', options.fillColor);
-        textNode.setAttribute('dy', this._path.getAttribute('stroke-width')-1);
+        textNode.setAttribute('dy', dy);
         textPath.appendChild(document.createTextNode(text));
         textNode.appendChild(textPath);
         svg.appendChild(textNode);
