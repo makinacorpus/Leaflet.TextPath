@@ -3,6 +3,8 @@ Leaflet.TextPath
 
 Shows a text along a Polyline.
 
+Check out the [demo](http://makinacorpus.github.com/Leaflet.TextPath/) !
+
 Usage
 -----
 
