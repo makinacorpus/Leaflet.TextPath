@@ -6,9 +6,19 @@
 var PolylineTextPath = {
 
     __updatePath: L.Polyline.prototype._updatePath,
+    __bringToFront: L.Polyline.prototype.bringToFront,
+
+    bringToFront: function () {
+        this.__bringToFront.call(this);
+        this._textRedraw();
+    },
 
     _updatePath: function () {
         this.__updatePath.call(this);
+        this._textRedraw();
+    },
+
+    _textRedraw: function () {
         var text = this._text,
             options = this._textOptions;
         if (text) {
