@@ -7,6 +7,19 @@ var PolylineTextPath = {
 
     __updatePath: L.Polyline.prototype._updatePath,
     __bringToFront: L.Polyline.prototype.bringToFront,
+    __onAdd: L.Polyline.prototype.onAdd,
+    __onRemove: L.Polyline.prototype.onRemove,
+
+    onAdd: function (map) {
+        this.__onAdd.call(this, map);
+        this._textRedraw();
+    },
+
+    onRemove: function (map) {
+        this.__onRemove.call(this, map);
+        if (this._textNode)
+            map._pathRoot.removeChild(this._textNode);
+    },
 
     bringToFront: function () {
         this.__bringToFront.call(this);
