@@ -3,6 +3,8 @@
  * http://mapbox.com/osmdev/2012/11/20/getting-serious-about-svg/
  */
 
+(function () {
+
 var __onAdd = L.Polyline.prototype.onAdd,
     __onRemove = L.Polyline.prototype.onRemove,
     __updatePath = L.Polyline.prototype._updatePath,
@@ -104,3 +106,5 @@ L.LayerGroup.include({
         return this;
     }
 });
+
+})();
