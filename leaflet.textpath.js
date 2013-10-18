@@ -3,15 +3,16 @@
  * http://mapbox.com/osmdev/2012/11/20/getting-serious-about-svg/
  */
 
+var __onAdd = L.Polyline.prototype.onAdd,
+    __onRemove = L.Polyline.prototype.onRemove,
+    __updatePath = L.Polyline.prototype._updatePath,
+    __bringToFront = L.Polyline.prototype.bringToFront;
+
+
 var PolylineTextPath = {
 
-    __updatePath: L.Polyline.prototype._updatePath,
-    __bringToFront: L.Polyline.prototype.bringToFront,
-    __onAdd: L.Polyline.prototype.onAdd,
-    __onRemove: L.Polyline.prototype.onRemove,
-
     onAdd: function (map) {
-        this.__onAdd.call(this, map);
+        __onAdd.call(this, map);
         this._textRedraw();
     },
 
@@ -19,16 +20,16 @@ var PolylineTextPath = {
         map = map || this._map;
         if (map && this._textNode)
             map._pathRoot.removeChild(this._textNode);
-        this.__onRemove.call(this, map);
+        __onRemove.call(this, map);
     },
 
     bringToFront: function () {
-        this.__bringToFront.call(this);
+        __bringToFront.call(this);
         this._textRedraw();
     },
 
     _updatePath: function () {
-        this.__updatePath.call(this);
+        __updatePath.call(this);
         this._textRedraw();
     },
 
