@@ -90,6 +90,22 @@ var PolylineTextPath = {
         textNode.appendChild(textPath);
         svg.appendChild(textNode);
         this._textNode = textNode;
+
+        /* Initialize mouse events for the additional nodes */
+        if (this.options.clickable) {
+            if (L.Browser.svg || !L.Browser.vml) {
+                textPath.setAttribute('class', 'leaflet-clickable');
+            }
+
+            L.DomEvent.on(textNode, 'click', this._onMouseClick, this);
+
+            var events = ['dblclick', 'mousedown', 'mouseover',
+                          'mouseout', 'mousemove', 'contextmenu'];
+            for (var i = 0; i < events.length; i++) {
+                L.DomEvent.on(textNode, events[i], this._fireMouseEvent, this);
+            }
+        }
+
         return this;
     }
 };
