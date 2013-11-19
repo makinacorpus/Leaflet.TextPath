@@ -47,6 +47,12 @@ var PolylineTextPath = {
         this._text = text;
         this._textOptions = options;
 
+        /* If not in SVG mode or Polyline not added to map yet return */
+        /* setText will be called by onAdd, using value stored in this._text */
+        if (!L.Browser.svg || typeof this._map === 'undefined') {
+          return this;
+        }
+
         var defaults = {repeat: false, fillColor: 'black', attributes: {}};
         options = L.Util.extend(defaults, options);
 
