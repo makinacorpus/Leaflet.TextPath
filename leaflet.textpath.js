@@ -47,6 +47,12 @@ var PolylineTextPath = {
         this._text = text;
         this._textOptions = options;
 
+        /* If not in SVG mode or Polyline not added to map yet return */
+        /* setText will be called by onAdd, using value stored in this._text */
+        if (!L.Browser.svg || typeof this._map === 'undefined') {
+          return this;
+        }
+
         var defaults = {repeat: false, fillColor: 'black', attributes: {}};
         options = L.Util.extend(defaults, options);
 
@@ -90,6 +96,22 @@ var PolylineTextPath = {
         textNode.appendChild(textPath);
         svg.appendChild(textNode);
         this._textNode = textNode;
+
+        /* Initialize mouse events for the additional nodes */
+        if (this.options.clickable) {
+            if (L.Browser.svg || !L.Browser.vml) {
+                textPath.setAttribute('class', 'leaflet-clickable');
+            }
+
+            L.DomEvent.on(textNode, 'click', this._onMouseClick, this);
+
+            var events = ['dblclick', 'mousedown', 'mouseover',
+                          'mouseout', 'mousemove', 'contextmenu'];
+            for (var i = 0; i < events.length; i++) {
+                L.DomEvent.on(textNode, events[i], this._fireMouseEvent, this);
+            }
+        }
+
         return this;
     }
 };
