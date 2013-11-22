@@ -16,10 +16,39 @@
             width: 100%;
             height: 100%
         }
+        .help {
+            font-size: 1.5em;
+            position: absolute;
+            top:0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            z-index: 10;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            padding: 10px;
+            margin: 0px;
+            text-align: center;
+        }
+        .help a.sources {
+            float: left;
+            margin-left: 50px;
+            color: white;
+        }
+        .help a.logo {
+            float: right;
+        }
+        .help a.logo img {
+            height: 30px;
+        }
     </style>
 </head>
 <body>
 
+    <p class="help">Decorate polylines with text
+      <a class="sources" href="http://github.com/makinacorpus/Leaflet.TextPath/">Sources</a>
+      <a class="logo" href="http://makina-corpus.com"><img src="http://depot.makina-corpus.org/public/logo.gif"/></a>
+    </p>
     <div id="map"></div>
 
     <script type="text/javascript">
@@ -38,7 +67,7 @@
         wind.setText(') ', {repeat: true,
                             offset: 7,
                             attributes: {fill: '#007DEF',
-                                         'font-weight': 'bold', 
+                                         'font-weight': 'bold',
                                          'font-size': '24'}});
 
         var danger = L.polyline([[-40.311, -31.952], [-12.086, -18.727]], {
@@ -57,7 +86,7 @@
             }).addTo(map);
         plane.setText('\u2708     ', {repeat: true,
                                       offset: 8,
-                                      attributes: {'font-weight': 'bold', 
+                                      attributes: {'font-weight': 'bold',
                                                    'font-size': '24'}});
     </script>
 </body>
