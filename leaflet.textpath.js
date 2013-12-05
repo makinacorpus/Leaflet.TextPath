@@ -58,7 +58,7 @@ var PolylineTextPath = {
 
         /* If empty text, hide */
         if (!text) {
-            if (this._textNode)
+            if (this._textNode && this._textNode.parentNode)
                 this._map._pathRoot.removeChild(this._textNode);
             return this;
         }
