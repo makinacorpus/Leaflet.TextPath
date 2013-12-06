@@ -96,6 +96,14 @@ var PolylineTextPath = {
         textNode.appendChild(textPath);
         svg.appendChild(textNode);
         this._textNode = textNode;
+        
+        /* Center text according to the path's bounding box */
+        if (options.center) {
+            var textWidth = textNode.getBBox().width;
+            var pathWidth = this._path.getBBox().width;
+            /* Set the position for the left side of the textNode */
+            textNode.setAttribute('dx', ((pathWidth / 2) - (textWidth / 2)));
+        }
 
         /* Initialize mouse events for the additional nodes */
         if (this.options.clickable) {
