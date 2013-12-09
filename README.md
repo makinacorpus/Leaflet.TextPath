@@ -10,7 +10,7 @@ Usage
 
 For example, show path orientation on mouse over :
 
-```
+```javascript
     var layer = L.polyLine(...);
     
     layer.on('mouseover', function () {
