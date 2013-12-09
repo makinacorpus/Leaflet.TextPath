@@ -41,4 +41,6 @@ The main idea comes from Tom Mac Wright's *[Getting serious about SVG](http://ma
 Authors
 -------
 
+Many thanks to [all contributors](https://github.com/makinacorpus/Leaflet.TextPath/graphs/contributors) !
+
 [![Makina Corpus](http://depot.makina-corpus.org/public/logo.gif)](http://makinacorpus.com)
