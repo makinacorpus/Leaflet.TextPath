@@ -22,6 +22,12 @@ For example, show path orientation on mouse over :
     });
 ```
 
+### Options
+
+* `repeat` Specifies if the text should be repeated along the polyline (Default: `false`)
+* `center` Centers the text according to the polyline's bounding box  (Default: `false`)
+* `attributes` Object containing the attributes applied to the `text` tag. Check valid attributes [here](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/text#Attributes) (Default: `{}`)
+
 Screenshot
 ----------
 
