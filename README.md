@@ -12,7 +12,7 @@ For example, show path orientation on mouse over :
 
 ```javascript
     var layer = L.polyLine(...);
-    
+
     layer.on('mouseover', function () {
         this.setText('  ►  ', {repeat: true, attributes: {fill: 'red'}});
     });
@@ -37,6 +37,22 @@ Credits
 -------
 
 The main idea comes from Tom Mac Wright's *[Getting serious about SVG](http://mapbox.com/osmdev/2012/11/20/getting-serious-about-svg/)*
+
+
+Changelog
+---------
+
+### 0.2.0 ###
+
+* Stay on top after bringToFront
+* Clean-up and fix `onAdd` and `onRemove`
+* Fire mouse events from underlying text layer (thanks Lewis Christie)
+
+### 0.1.0 ###
+
+* Initial working version
+
+
 
 Authors
 -------
