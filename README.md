@@ -44,6 +44,10 @@ Changelog
 
 ### master ###
 
+* Nothing changed yet.
+
+### 0.2.1 ###
+
 * Fix layer order (fixes #5) (thanks Albin Larsson)
 
 ### 0.2.0 ###
