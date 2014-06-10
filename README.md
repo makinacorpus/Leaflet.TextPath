@@ -42,6 +42,10 @@ The main idea comes from Tom Mac Wright's *[Getting serious about SVG](http://ma
 Changelog
 ---------
 
+### master ###
+
+* Fix layer order (fixes #5) (thanks Albin Larsson)
+
 ### 0.2.0 ###
 
 * Stay on top after bringToFront
