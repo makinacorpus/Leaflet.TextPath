@@ -94,7 +94,7 @@ var PolylineTextPath = {
             textNode.setAttribute(attr, options.attributes[attr]);
         textPath.appendChild(document.createTextNode(text));
         textNode.appendChild(textPath);
-        svg.appendChild(textNode);
+        svg.insertBefore(textNode, svg.firstChild);
         this._textNode = textNode;
         
         /* Center text according to the path's bounding box */
