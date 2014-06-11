@@ -44,7 +44,7 @@ Changelog
 
 ### master ###
 
-* Nothing changed yet.
+* Fix path width when using options.center (fixes #17) (thanks Brent Miller).
 
 ### 0.2.1 ###
 
