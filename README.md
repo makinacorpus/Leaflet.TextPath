@@ -44,6 +44,11 @@ Changelog
 
 ### master ###
 
+* Nothing changed yet.
+
+### 0.2.2 ###
+
+* Fix bug when removing layer whose text was removed (fixes #18) (thanks Victor Gomes)
 * Fix path width when using options.center (fixes #17) (thanks Brent Miller).
 
 ### 0.2.1 ###
