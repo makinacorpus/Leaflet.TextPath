@@ -58,8 +58,12 @@ var PolylineTextPath = {
 
         /* If empty text, hide */
         if (!text) {
-            if (this._textNode && this._textNode.parentNode)
+            if (this._textNode && this._textNode.parentNode) {
                 this._map._pathRoot.removeChild(this._textNode);
+                
+                /* delete the node, so it will not be removed a 2nd time if the layer is later removed from the map */
+                delete this._textNode;
+            }
             return this;
         }
 
