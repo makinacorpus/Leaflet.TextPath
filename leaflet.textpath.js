@@ -53,7 +53,12 @@ var PolylineTextPath = {
           return this;
         }
 
-        var defaults = {repeat: false, fillColor: 'black', attributes: {}};
+        var defaults = {
+            repeat: false,
+            fillColor: 'black',
+            attributes: {},
+            below: false,
+        };
         options = L.Util.extend(defaults, options);
 
         /* If empty text, hide */
@@ -98,9 +103,15 @@ var PolylineTextPath = {
             textNode.setAttribute(attr, options.attributes[attr]);
         textPath.appendChild(document.createTextNode(text));
         textNode.appendChild(textPath);
-        svg.insertBefore(textNode, svg.firstChild);
         this._textNode = textNode;
-        
+
+        if (options.below) {
+            svg.insertBefore(textNode, svg.firstChild);
+        }
+        else {
+            svg.appendChild(textNode);
+        }
+
         /* Center text according to the path's bounding box */
         if (options.center) {
             var textWidth = textNode.getBBox().width;
