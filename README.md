@@ -27,6 +27,7 @@ For example, show path orientation on mouse over :
 * `repeat` Specifies if the text should be repeated along the polyline (Default: `false`)
 * `center` Centers the text according to the polyline's bounding box  (Default: `false`)
 * `attributes` Object containing the attributes applied to the `text` tag. Check valid attributes [here](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/text#Attributes) (Default: `{}`)
+* `below` Show text below the path (Default: false)
 
 Screenshot
 ----------
@@ -44,7 +45,10 @@ Changelog
 
 ### master ###
 
-* Nothing changed yet.
+**Breaking changes**
+
+* Set option ``below`` to true to put the text below the layer. It is shown
+  on top by default.
 
 ### 0.2.2 ###
 
