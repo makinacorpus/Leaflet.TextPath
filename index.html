@@ -88,6 +88,108 @@
                                       offset: 8,
                                       attributes: {'font-weight': 'bold',
                                                    'font-size': '24'}});
+
+        var flights = {
+          "type": "FeatureCollection",
+          "features": [
+            {
+              "type": "Feature",
+              "properties": {
+                "flight": "To New Delhi"
+              },
+              "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                  [
+                    3.33984375,
+                    46.6795944656402
+                  ],
+                  [
+                    29.53125,
+                    46.55886030311719
+                  ],
+                  [
+                    51.328125,
+                    42.293564192170095
+                  ],
+                  [
+                    68.5546875,
+                    35.746512259918504
+                  ],
+                  [
+                    76.81640625,
+                    28.65203063036226
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "Feature",
+              "properties": {
+                "flight": "To Hanoi"
+              },
+              "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                  [
+                    77.607421875,
+                    28.767659105691255
+                  ],
+                  [
+                    88.72558593749999,
+                    27.839076094777816
+                  ],
+                  [
+                    97.3828125,
+                    25.681137335685307
+                  ],
+                  [
+                    105.77636718749999,
+                    21.248422235627014
+                  ]
+                ]
+              }
+            },
+            {
+              "type": "Feature",
+              "properties": {
+                "flight": "To Bangkok"
+              },
+              "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                  [
+                    106.67724609375,
+                    10.790140750321738
+                  ],
+                  [
+                    104.08447265624999,
+                    11.523087506868514
+                  ],
+                  [
+                    102.1728515625,
+                    12.254127737657381
+                  ],
+                  [
+                    100.45898437499999,
+                    13.667338259654947
+                  ]
+                ]
+              }
+            }
+          ]
+        };
+
+        L.geoJson(flights, {
+            onEachFeature: function (feature, layer) {
+                layer.setText(feature.properties.flight, {offset: -5});
+            },
+            style: {
+                weight: 3,
+                color: 'purple',
+                dashArray: '4, 4'
+            }
+        }).addTo(map);
     </script>
 </body>
 </html>
