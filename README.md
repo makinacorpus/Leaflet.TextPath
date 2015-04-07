@@ -29,6 +29,17 @@ For example, show path orientation on mouse over :
     });
 ```
 
+With a GeoJSON containing lines, it becomes:
+
+```javascript
+    L.geoJson(data, {
+        onEachFeature: function (feature, layer) {
+            layer.setText(feature.properties.label);
+        }
+    }).addTo(map);
+
+```
+
 ### Options
 
 * `repeat` Specifies if the text should be repeated along the polyline (Default: `false`)
