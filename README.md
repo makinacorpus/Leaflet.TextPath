@@ -46,9 +46,9 @@ With a GeoJSON containing lines, it becomes:
 * `center` Centers the text according to the polyline's bounding box  (Default: `false`)
 * `below` Show text below the path (Default: false)
 * `orientation` Rotate text.  (Default: 0)
-    - orientation: <angle> - rotate to a specified angle (e.g. orientation: 15)
-    - orientation: flip - filps the text 180deg correction for upside down text placement on west -> east lines
-    - orientation: perpendicular - places text at right angles to the line.
+    - {orientation: angle} - rotate to a specified angle (e.g. {orientation: 15})
+    - {orientation: flip} - filps the text 180deg correction for upside down text placement on west -> east lines
+    - {orientation: perpendicular} - places text at right angles to the line.
 
 * `attributes` Object containing the attributes applied to the `text` tag. Check valid attributes [here](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/text#Attributes) (Default: `{}`)
 
