@@ -1,4 +1,5 @@
 /*
+ * Leaflet.TextPath - Shows text along a polyline
  * Inspired by Tom Mac Wright article :
  * http://mapbox.com/osmdev/2012/11/20/getting-serious-about-svg/
  */
@@ -121,10 +122,10 @@ var PolylineTextPath = {
         }
 
         if (options.flipvertical) {   
-			var rotatecenterX = (textNode.getBBox().x + textNode.getBBox().width / 2);
-			var rotatecenterY = (textNode.getBBox().y + textNode.getBBox().height / 2);			
-			textNode.setAttribute('transform', 'rotate(90 ' + rotatecenterX + ' ' + rotatecenterY + ')');			
-		}
+		var rotatecenterX = (textNode.getBBox().x + textNode.getBBox().width / 2);
+		var rotatecenterY = (textNode.getBBox().y + textNode.getBBox().height / 2);			
+		textNode.setAttribute('transform', 'rotate(180 ' + rotatecenterX + ' ' + rotatecenterY + ')');			
+	}
 
         /* Initialize mouse events for the additional nodes */
         if (this.options.clickable) {
@@ -157,5 +158,47 @@ L.LayerGroup.include({
         return this;
     }
 });
+
+/* Functions to compute line direction to correct text orientation
+ * Note: only generic, in future could check each line segment.
+ */
+
+/* Calculate bearing between start and end of line */
+function getBearing(Lat1, Lon1, Lat2, Lon2) {
+  var dLon = Lon2.toRadians() - Lon1.toRadians();
+  var dPhi = Math.log(Math.tan(Lat2.toRadians() / 2 + Math.PI/4) / Math.tan(Lat1.toRadians()/2 + Math.PI/4));
+  if (Math.abs(dLon) > Math.PI){
+    if (dLon > 0.0) {
+      dLon = -(2.0 * Math.PI - dLon);
+    } else {
+      dLon = (2.0 * Math.PI + dLon);
+    }
+  }
+  
+  return (Math.atan2(dLon, dPhi)) + 360).toDegrees() % 360;
+}
+
+/* Convert bearing into a generic direction. Lines heading North or East should have their labels flipped */
+function correctLabelOrientation (b) {
+    if (b >= 45 && b =< 135) {
+      return true; /* North */
+    } else if (b >= 136 && b =< 225) {
+      return true; /* East */
+    } else if (b >= 226 && b =< 315) {
+      return false; /* South */
+    } else {
+      return false; /* West */
+    }
+}
+
+/* Convert Degrees to Radians */
+Number.prototype.toRadians = function() { 
+    return (this.valueOf() * Math.PI) / 180; 
+} 
+
+/* Convert Radians to Degrees */
+Number.prototype.toDegrees = function() { 
+    return this.valueOf() * (180 * Math.PI); 
+} 
 
 })();
