@@ -120,6 +120,12 @@ var PolylineTextPath = {
             textNode.setAttribute('dx', ((pathWidth / 2) - (textWidth / 2)));
         }
 
+        if (options.flipvertical) {   
+			var rotatecenterX = (textNode.getBBox().x + textNode.getBBox().width / 2);
+			var rotatecenterY = (textNode.getBBox().y + textNode.getBBox().height / 2);			
+			textNode.setAttribute('transform', 'rotate(90 ' + rotatecenterX + ' ' + rotatecenterY + ')');			
+		}
+
         /* Initialize mouse events for the additional nodes */
         if (this.options.clickable) {
             if (L.Browser.svg || !L.Browser.vml) {
