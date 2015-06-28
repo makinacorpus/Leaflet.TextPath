@@ -89,6 +89,13 @@
                                       attributes: {'font-weight': 'bold',
                                                    'font-size': '24'}});
 
+        var alpha = L.polyline([[29.53522956294847,119.88281249999999],[25.165173368663954, 156.09375], [37.16031654673677,185.2734375],[-8.05922962720018, 204.9609375]]).addTo(map)
+        alpha.setText('A ', {repeat: true,
+                             rotate: true,
+                             attributes: {fill: 'purple',
+                                          'font-size': '12'}});
+
+
         var flights = {
           "type": "FeatureCollection",
           "features": [
