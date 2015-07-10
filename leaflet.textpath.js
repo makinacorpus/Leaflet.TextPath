@@ -58,6 +58,7 @@ var PolylineTextPath = {
             fillColor: 'black',
             attributes: {},
             below: false,
+            rotate: false
         };
         options = L.Util.extend(defaults, options);
 
@@ -104,6 +105,12 @@ var PolylineTextPath = {
         textPath.appendChild(document.createTextNode(text));
         textNode.appendChild(textPath);
         this._textNode = textNode;
+
+        if (options.rotate) {
+            var textNodeStyle = textNode.getAttribute("style") ? textNode.getAttribute("style") : "";
+            textNodeStyle += "writing-mode: tb; glyph-orientation-vertical: 180;";
+            textNode.setAttribute("style",  textNodeStyle);
+        }
 
         if (options.below) {
             svg.insertBefore(textNode, svg.firstChild);
