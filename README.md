@@ -46,6 +46,7 @@ With a GeoJSON containing lines, it becomes:
 * `center` Centers the text according to the polyline's bounding box  (Default: `false`)
 * `attributes` Object containing the attributes applied to the `text` tag. Check valid attributes [here](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/text#Attributes) (Default: `{}`)
 * `below` Show text below the path (Default: false)
+* `offset` Set an offset to position text relative to the polyline (Default: 0)
 
 Screenshot
 ----------
