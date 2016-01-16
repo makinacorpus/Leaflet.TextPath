@@ -62,12 +62,15 @@ The main idea comes from Tom Mac Wright's *[Getting serious about SVG](http://ma
 Changelog
 ---------
 
-### master ###
+### development ###
+
+* Nothing changed yet.
+
+### 1.0.0 ###
 
 **Breaking changes**
 
-* Set option ``below`` to true to put the text below the layer. It is shown
-  on top by default.
+* Text is now shown on top by default. Set option ``below`` to true to put the text below the layer.
 
 ### 0.2.2 ###
 
