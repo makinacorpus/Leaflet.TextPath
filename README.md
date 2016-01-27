@@ -51,7 +51,7 @@ With a GeoJSON containing lines, it becomes:
 Screenshot
 ----------
 
-![screenshot](https://raw.github.com/makinacorpus/Leaflet.TextPath/master/screenshot.png)
+![screenshot](https://raw.github.com/makinacorpus/Leaflet.TextPath/gh-pages/screenshot.png)
 
 Credits
 -------
