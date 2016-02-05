@@ -114,10 +114,10 @@ var PolylineTextPath = {
 
         /* Center text according to the path's bounding box */
         if (options.center) {
-            var textWidth = textNode.getBBox().width;
-            var pathWidth = this._path.getBoundingClientRect().width;
+            var textLength = textNode.getComputedTextLength();
+            var pathLength = this._path.getTotalLength();
             /* Set the position for the left side of the textNode */
-            textNode.setAttribute('dx', ((pathWidth / 2) - (textWidth / 2)));
+            textNode.setAttribute('dx', ((pathLength / 2) - (textLength / 2)));
         }
 
         /* Initialize mouse events for the additional nodes */
