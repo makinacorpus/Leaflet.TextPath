@@ -64,7 +64,7 @@ Changelog
 
 ### development ###
 
-* Nothing changed yet.
+* Fix text centering for vertical lines (#33, #34, #38, thanks @msgoloborodov)
 
 ### 1.0.0 ###
 

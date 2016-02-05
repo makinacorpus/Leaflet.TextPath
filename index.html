@@ -190,6 +190,12 @@
                 dashArray: '4, 4'
             }
         }).addTo(map);
+
+        var pos1 = [40.418075, -3.704643],
+            pos2 = [40.413119, -3.702369];
+        var line = L.polyline([pos1, pos2]);
+        line.setText('HOLA', { center: true, attributes: { fill: 'red' } });
+        line.addTo(map);
     </script>
 </body>
 </html>
