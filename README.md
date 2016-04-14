@@ -35,6 +35,7 @@ For example, show path orientation on mouse over :
 * `center` Centers the text according to the polyline's bounding box  (Default: `false`)
 * `attributes` Object containing the attributes applied to the `text` tag. Check valid attributes [here](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/text#Attributes) (Default: `{}`)
 * `below` Show text below the path (Default: false)
+* `pane` Name of the pane where the text has to be drawn 
 
 Screenshot
 ----------
