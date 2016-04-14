@@ -20,8 +20,19 @@ var PolylineTextPath = {
 
     onRemove: function (map) {
         map = map || this._map;
-        if (map && this._textNode)
-            map._renderer._container.removeChild(this._textNode);
+        if (map && this._textNode) {
+            var svg = map._renderer._container;
+            if (this._textOptions.pane) {
+                paned_svg = this._map._getPaneRenderer(this._textOptions.pane);
+                try{
+                    svg = paned_svg._container;
+                }
+                catch (err) {
+                    var svg = this._map._renderer._container;
+                }
+            }
+            svg.removeChild(this._textNode);
+        }
         __onRemove.call(this, map);
     },
 
@@ -39,7 +50,7 @@ var PolylineTextPath = {
         var text = this._text,
             options = this._textOptions;
         if (text) {
-            this.setText(null).setText(text, options);
+            this.setText(null, options).setText(text, options);
         }
     },
 
@@ -61,10 +72,24 @@ var PolylineTextPath = {
         };
         options = L.Util.extend(defaults, options);
 
+        var svg = this._map._renderer._container;
+        if (options.pane) {
+            paned_svg = this._map._getPaneRenderer(options.pane);
+            try{
+                svg = paned_svg._container;
+            }
+            catch (err) {
+                var svg = this._map._renderer._container;
+            }
+        }
+
         /* If empty text, hide */
         if (!text) {
             if (this._textNode && this._textNode.parentNode) {
-                this._map._renderer._container.removeChild(this._textNode);
+                try {
+                    svg.removeChild(this._textNode);
+                }
+                catch (err) { ; }
                 
                 /* delete the node, so it will not be removed a 2nd time if the layer is later removed from the map */
                 delete this._textNode;
@@ -74,7 +99,7 @@ var PolylineTextPath = {
 
         text = text.replace(/ /g, '\u00A0');  // Non breakable spaces
         var id = 'pathdef-' + L.Util.stamp(this);
-        var svg = this._map._renderer._container;
+
         this._path.setAttribute('id', id);
 
         if (options.repeat) {
