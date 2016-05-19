@@ -66,6 +66,10 @@ Changelog
 
 * Nothing changed yet.
 
+### 1.0.2 ###
+
+* Allow HTTP and HTTPS to access the demo (#39, thanks @sonny89 and @leplatrem)
+
 ### 1.0.1 ###
 
 * Fix text centering for vertical lines (#33, #34, #38, thanks @msgoloborodov)

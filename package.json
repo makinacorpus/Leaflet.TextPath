@@ -1,6 +1,6 @@
 {
     "name": "leaflet-textpath",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Shows a text (or a pattern) along a Polyline",
     "keywords": ["Leaflet", "GIS", "SVG"],
     "main": "leaflet.textpath.js",
