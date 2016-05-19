@@ -88,7 +88,7 @@
                                       attributes: {'font-weight': 'bold',
                                                    'font-size': '24'}});
 
-        var flights = {
+        var flightsWE = {
           "type": "FeatureCollection",
           "features": [
             {
@@ -148,7 +148,13 @@
                   ]
                 ]
               }
-            },
+            }
+          ]
+        };
+
+        var flightsEW = {
+          "type": "FeatureCollection",
+          "features": [
             {
               "type": "Feature",
               "properties": {
@@ -179,9 +185,20 @@
           ]
         };
 
-        L.geoJson(flights, {
+        L.geoJson(flightsWE, {
             onEachFeature: function (feature, layer) {
                 layer.setText(feature.properties.flight, {offset: -5});
+            },
+            style: {
+                weight: 3,
+                color: 'purple',
+                dashArray: '4, 4'
+            }
+        }).addTo(map);
+
+        L.geoJson(flightsEW, {
+            onEachFeature: function (feature, layer) {
+                layer.setText(feature.properties.flight, {offset: -5, orientation: 'flip'});
             },
             style: {
                 weight: 3,
