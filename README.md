@@ -44,13 +44,19 @@ With a GeoJSON containing lines, it becomes:
 
 * `repeat` Specifies if the text should be repeated along the polyline (Default: `false`)
 * `center` Centers the text according to the polyline's bounding box  (Default: `false`)
-* `attributes` Object containing the attributes applied to the `text` tag. Check valid attributes [here](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/text#Attributes) (Default: `{}`)
 * `below` Show text below the path (Default: false)
+* `offset` Set an offset to position text relative to the polyline (Default: 0)
+* `orientation` Rotate text.  (Default: 0)
+    - {orientation: angle} - rotate to a specified angle (e.g. {orientation: 15})
+    - {orientation: flip} - filps the text 180deg correction for upside down text placement on west -> east lines
+    - {orientation: perpendicular} - places text at right angles to the line.
+
+* `attributes` Object containing the attributes applied to the `text` tag. Check valid attributes [here](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/text#Attributes) (Default: `{}`)
 
 Screenshot
 ----------
 
-![screenshot](https://raw.github.com/makinacorpus/Leaflet.TextPath/master/screenshot.png)
+![screenshot](https://raw.github.com/makinacorpus/Leaflet.TextPath/gh-pages/screenshot.png)
 
 Credits
 -------
@@ -61,12 +67,27 @@ The main idea comes from Tom Mac Wright's *[Getting serious about SVG](http://ma
 Changelog
 ---------
 
-### master ###
+### development ###
+
+* Nothing changed yet.
+
+### 1.1.0 ###
+
+* Add the orientation option (#27, thanks @kirkau)
+
+### 1.0.2 ###
+
+* Allow HTTP and HTTPS to access the demo (#39, thanks @sonny89 and @leplatrem)
+
+### 1.0.1 ###
+
+* Fix text centering for vertical lines (#33, #34, #38, thanks @msgoloborodov)
+
+### 1.0.0 ###
 
 **Breaking changes**
 
-* Set option ``below`` to true to put the text below the layer. It is shown
-  on top by default.
+* Text is now shown on top by default. Set option ``below`` to true to put the text below the layer.
 
 ### 0.2.2 ###
 

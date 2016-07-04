@@ -1,4 +1,5 @@
 /*
+ * Leaflet.TextPath - Shows text along a polyline
  * Inspired by Tom Mac Wright article :
  * http://mapbox.com/osmdev/2012/11/20/getting-serious-about-svg/
  */
@@ -114,10 +115,30 @@ var PolylineTextPath = {
 
         /* Center text according to the path's bounding box */
         if (options.center) {
-            var textWidth = textNode.getBBox().width;
-            var pathWidth = this._path.getBoundingClientRect().width;
+            var textLength = textNode.getComputedTextLength();
+            var pathLength = this._path.getTotalLength();
             /* Set the position for the left side of the textNode */
-            textNode.setAttribute('dx', ((pathWidth / 2) - (textWidth / 2)));
+            textNode.setAttribute('dx', ((pathLength / 2) - (textLength / 2)));
+        }
+
+        /* Change label rotation (if required) */
+        console.log(options.orientation)
+        if (options.orientation) {
+            var rotateAngle = 0;
+            switch (options.orientation) {
+                case 'flip':
+                    rotateAngle = 180;
+                    break;
+                case 'perpendicular':
+                    rotateAngle = 90;
+                    break;
+                default:
+                    rotateAngle = options.orientation;
+            }
+
+            var rotatecenterX = (textNode.getBBox().x + textNode.getBBox().width / 2);
+            var rotatecenterY = (textNode.getBBox().y + textNode.getBBox().height / 2);
+            textNode.setAttribute('transform','rotate(' + rotateAngle + ' '  + rotatecenterX + ' ' + rotatecenterY + ')');
         }
 
         /* Initialize mouse events for the additional nodes */
@@ -151,5 +172,7 @@ L.LayerGroup.include({
         return this;
     }
 });
+
+
 
 })();
