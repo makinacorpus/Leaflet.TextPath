@@ -121,6 +121,12 @@ var PolylineTextPath = {
             textNode.setAttribute('dx', ((pathLength / 2) - (textLength / 2)));
         }
 
+        /* Change font size (if required) */
+        if (options.fontsize) {
+			var size = options.fontsize;			
+			textNode.setAttribute('font-size', size);
+		}
+
         /* Change label rotation (if required) */
         console.log(options.orientation)
         if (options.orientation) {
