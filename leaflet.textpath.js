@@ -123,9 +123,8 @@ var PolylineTextPath = {
 
         /* Change font size (if required) */
         if (options.fontsize) {
-			var size = options.fontsize;			
-			textNode.setAttribute('font-size', size);
-		}
+		textNode.setAttribute('font-size', options.fontsize);
+	}
 
         /* Change label rotation (if required) */
         console.log(options.orientation)
