@@ -122,7 +122,6 @@ var PolylineTextPath = {
         }
 
         /* Change label rotation (if required) */
-        console.log(options.orientation)
         if (options.orientation) {
             var rotateAngle = 0;
             switch (options.orientation) {
