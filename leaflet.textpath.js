@@ -89,7 +89,9 @@ var PolylineTextPath = {
             svg.removeChild(pattern);
 
             /* Create string as long as path */
-            text = new Array(Math.ceil(this._path.getTotalLength() / alength)).join(text);
+            if (alength > 0) {
+                text = new Array(Math.ceil(this._path.getTotalLength() / alength)).join(text);
+            }
         }
 
         /* Put it along the path using textPath */
