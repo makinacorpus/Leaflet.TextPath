@@ -23,7 +23,7 @@ onAdd: function (map) {
 onRemove: function (map) {
     map = map || this._map;
     if (map && this._textNode)
-        map._pathRoot.removeChild(this._textNode);
+        map._renderer._container.removeChild(this._textNode);
     __onRemove.call(this, map);
 },
 
