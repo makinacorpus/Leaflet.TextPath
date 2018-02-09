@@ -4,8 +4,6 @@
  * http://mapbox.com/osmdev/2012/11/20/getting-serious-about-svg/
  */
 
-import L from 'leaflet';
-
 (function () {
 
 var __onAdd = L.Polyline.prototype.onAdd,
@@ -82,7 +80,7 @@ var PolylineTextPath = {
 
         if (options.repeat) {
             /* Compute single pattern length */
-            var pattern = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            var pattern = L.SVG.create('text');
             for (var attr in options.attributes)
                 pattern.setAttribute(attr, options.attributes[attr]);
             pattern.appendChild(document.createTextNode(text));
