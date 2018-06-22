@@ -1,4 +1,10 @@
 
+1.2.1 / 2018-06-22
+==================
+
+  * Update logo and turn links to https
+  * Add example html page charset (utf8)
+
 1.2.0 / 2018-03-01
 ==================
 
