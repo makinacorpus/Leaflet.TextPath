@@ -11,6 +11,7 @@ var __onAdd = L.Polyline.prototype.onAdd,
     __updatePath = L.Polyline.prototype._updatePath,
     __bringToFront = L.Polyline.prototype.bringToFront;
 
+var _getLengthCache = {}
 
 var PolylineTextPath = {
 
@@ -45,6 +46,12 @@ var PolylineTextPath = {
     },
 
     _getLength: function (text, options) {
+        var cacheId = text + '|' + JSON.stringify(options.attributes)
+
+        if (cacheId in _getLengthCache) {
+          return _getLengthCache[cacheId]
+        }
+
         var svg = this._map._renderer._container;
 
         var pattern = L.SVG.create('text');
@@ -54,6 +61,8 @@ var PolylineTextPath = {
         svg.appendChild(pattern);
         var length = pattern.getComputedTextLength();
         svg.removeChild(pattern);
+
+        _getLengthCache[cacheId] = length
 
         return length;
     },
