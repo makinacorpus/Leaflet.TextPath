@@ -44,6 +44,20 @@ var PolylineTextPath = {
         }
     },
 
+    _getLength: function (text, options) {
+        var svg = this._map._renderer._container;
+
+        var pattern = L.SVG.create('text');
+        for (var attr in options.attributes)
+            pattern.setAttribute(attr, options.attributes[attr]);
+        pattern.appendChild(document.createTextNode(text));
+        svg.appendChild(pattern);
+        var length = pattern.getComputedTextLength();
+        svg.removeChild(pattern);
+
+        return length;
+    },
+
     setText: function (text, options) {
         this._text = text;
         this._textOptions = options;
@@ -80,22 +94,10 @@ var PolylineTextPath = {
 
         if (options.repeat !== false) {
             /* Compute single pattern length */
-            var pattern = L.SVG.create('text');
-            for (var attr in options.attributes)
-                pattern.setAttribute(attr, options.attributes[attr]);
-            pattern.appendChild(document.createTextNode(text));
-            svg.appendChild(pattern);
-            var alength = pattern.getComputedTextLength();
-            svg.removeChild(pattern);
+            var alength = this._getLength(text, options);
 
             /* Compute length of a space */
-            var pattern = L.SVG.create('text');
-            for (var attr in options.attributes)
-                pattern.setAttribute(attr, options.attributes[attr]);
-            pattern.appendChild(document.createTextNode('\u00A0'));
-            svg.appendChild(pattern);
-            var slength = pattern.getComputedTextLength();
-            svg.removeChild(pattern);
+            var slength = this._getLength('\u00A0', options);
 
             /* Create string as long as path */
             var repeatDistance = parseFloat(options.repeat) || 0
