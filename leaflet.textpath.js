@@ -78,7 +78,7 @@ var PolylineTextPath = {
         var svg = this._map._renderer._container;
         this._path.setAttribute('id', id);
 
-        if (options.repeat) {
+        if (options.repeat !== false) {
             /* Compute single pattern length */
             var pattern = L.SVG.create('text');
             for (var attr in options.attributes)
@@ -88,8 +88,25 @@ var PolylineTextPath = {
             var alength = pattern.getComputedTextLength();
             svg.removeChild(pattern);
 
+            /* Compute length of a space */
+            var pattern = L.SVG.create('text');
+            for (var attr in options.attributes)
+                pattern.setAttribute(attr, options.attributes[attr]);
+            pattern.appendChild(document.createTextNode('\u00A0'));
+            svg.appendChild(pattern);
+            var slength = pattern.getComputedTextLength();
+            svg.removeChild(pattern);
+
             /* Create string as long as path */
-            text = new Array(Math.ceil(this._path.getTotalLength() / alength)).join(text);
+            var repeatDistance = parseFloat(options.repeat) || 0
+            var spacingBalance = 0
+            var singleText = text
+            for (var i = 1; i < Math.floor((this._path.getTotalLength() + repeatDistance) / (alength + repeatDistance)); i++) {
+                var spacesCount = Math.round((repeatDistance + spacingBalance) / slength)
+                spacingBalance = repeatDistance - (spacesCount * slength)
+
+                text += '\u00A0'.repeat(spacesCount) + singleText
+            }
         }
 
         /* Put it along the path using textPath */

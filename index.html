@@ -188,7 +188,7 @@
 
         L.geoJson(flightsWE, {
             onEachFeature: function (feature, layer) {
-                layer.setText(feature.properties.flight, {offset: -5});
+                layer.setText(feature.properties.flight, {offset: -5, repeat: 20, center: true});
             },
             style: {
                 weight: 3,
