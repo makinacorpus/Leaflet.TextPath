@@ -82,6 +82,7 @@ var PolylineTextPath = {
             fillColor: 'black',
             attributes: {},
             below: false,
+            allowCrop: true
         };
         options = L.Util.extend(defaults, options);
 
@@ -101,9 +102,21 @@ var PolylineTextPath = {
         var svg = this._map._renderer._container;
         this._path.setAttribute('id', id);
 
+        var textLength = null
+
+        if (!options.allowCrop) {
+          textLength = this._getLength(text, options);
+
+          if (textLength > this._path.getTotalLength()) {
+            return this;
+          }
+        }
+
         if (options.repeat !== false) {
             /* Compute single pattern length */
-            var alength = this._getLength(text, options);
+            if (textLength === null) {
+              textLength = this._getLength(text, options);
+            }
 
             /* Compute length of a space */
             var slength = this._getLength('\u00A0', options);
@@ -112,7 +125,7 @@ var PolylineTextPath = {
             var repeatDistance = parseFloat(options.repeat) || 0
             var spacingBalance = 0
             var singleText = text
-            for (var i = 1; i < Math.floor((this._path.getTotalLength() + repeatDistance) / (alength + repeatDistance)); i++) {
+            for (var i = 1; i < Math.floor((this._path.getTotalLength() + repeatDistance) / (textLength + repeatDistance)); i++) {
                 var spacesCount = Math.round((repeatDistance + spacingBalance) / slength)
                 spacingBalance = repeatDistance - (spacesCount * slength)
 

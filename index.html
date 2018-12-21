@@ -199,7 +199,7 @@
 
         L.geoJson(flightsEW, {
             onEachFeature: function (feature, layer) {
-                layer.setText(feature.properties.flight, {offset: -5, orientation: 'flip'});
+                layer.setText(feature.properties.flight, {offset: -5, orientation: 'flip', allowCrop: false});
             },
             style: {
                 weight: 3,
