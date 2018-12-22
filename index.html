@@ -186,6 +186,53 @@
           ]
         };
 
+	var rainbowGeom = {
+	  "type": "FeatureCollection",
+	  "features": [
+	    {
+	      "type": "Feature",
+	      "properties": {},
+	      "geometry": {
+		"type": "LineString",
+		"coordinates": [
+		  [
+		    -4.04296875,
+		    17.476432197195518
+		  ],
+		  [
+		    -2.8125,
+		    21.12549763660628
+		  ],
+		  [
+		    0.3515625,
+		    24.287026865376436
+		  ],
+		  [
+		    5.09765625,
+		    25.64152637306577
+		  ],
+		  [
+		    11.25,
+		    25.64152637306577
+		  ],
+		  [
+		    15.908203125,
+		    23.805449612314625
+		  ],
+		  [
+		    18.45703125,
+		    21.289374355860424
+		  ],
+		  [
+		    19.86328125,
+		    17.644022027872726
+		  ]
+		]
+	      }
+	    }
+	  ]
+	};
+
         L.geoJson(flightsWE, {
             onEachFeature: function (feature, layer) {
                 layer.setText(feature.properties.flight, {offset: -5, repeat: 20, center: true});
@@ -205,6 +252,32 @@
                 weight: 3,
                 color: 'purple',
                 dashArray: '4, 4'
+            }
+        }).addTo(map);
+
+        L.geoJson(rainbowGeom, {
+            onEachFeature: function (feature, layer) {
+                layer.setText(
+                    [
+                        { fill: '#ff0000', text: 'R' },
+                        { fill: '#ff7f00', text: 'a' },
+                        { fill: '#ffff00', text: 'i' },
+                        { fill: '#00ff00', text: 'n' },
+                        { fill: '#008f8f', text: 'b' },
+                        { fill: '#0000ff', text: 'o' },
+                        { fill: '#8b00ff', text: 'w' },
+                    ],
+                    {
+                        offset: -5,
+                        repeat: 20,
+                        center: true,
+                        attributes: { 'font-size': '16pt', 'font-weight': 'bold', 'stroke-width': 0.5, 'stroke': '#000000' }
+                    }
+                );
+            },
+            style: {
+                weight: 2,
+                color: 'black'
             }
         }).addTo(map);
 

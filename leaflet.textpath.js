@@ -46,7 +46,7 @@ var PolylineTextPath = {
     },
 
     _getLength: function (text, options) {
-        var cacheId = text + '|' + JSON.stringify(options.attributes)
+        var cacheId = JSON.stringify(text) + '|' + JSON.stringify(options.attributes)
 
         if (cacheId in _getLengthCache) {
           return _getLengthCache[cacheId]
@@ -57,7 +57,7 @@ var PolylineTextPath = {
         var pattern = L.SVG.create('text');
         for (var attr in options.attributes)
             pattern.setAttribute(attr, options.attributes[attr]);
-        pattern.appendChild(document.createTextNode(text));
+        this._applyText(pattern, text);
         svg.appendChild(pattern);
         var length = pattern.getComputedTextLength();
         svg.removeChild(pattern);
@@ -97,7 +97,6 @@ var PolylineTextPath = {
             return this;
         }
 
-        text = text.replace(/ /g, '\u00A0');  // Non breakable spaces
         var id = 'pathdef-' + L.Util.stamp(this);
         var svg = this._map._renderer._container;
         this._path.setAttribute('id', id);
@@ -129,7 +128,11 @@ var PolylineTextPath = {
                 var spacesCount = Math.round((repeatDistance + spacingBalance) / slength)
                 spacingBalance = repeatDistance - (spacesCount * slength)
 
-                text += '\u00A0'.repeat(spacesCount) + singleText
+                if (Array.isArray(singleText)) {
+                    text = text.concat([{ text: '\u00A0'.repeat(spacesCount) }], singleText)
+                } else {
+                    text += '\u00A0'.repeat(spacesCount) + singleText
+                }
             }
         }
 
@@ -143,7 +146,7 @@ var PolylineTextPath = {
         textNode.setAttribute('dy', dy);
         for (var attr in options.attributes)
             textNode.setAttribute(attr, options.attributes[attr]);
-        textPath.appendChild(document.createTextNode(text));
+        this._applyText(textPath, text);
         textNode.appendChild(textPath);
         this._textNode = textNode;
 
@@ -197,6 +200,28 @@ var PolylineTextPath = {
         }
 
         return this;
+    },
+
+    _applyText: function(parentNode, text) {
+        if (Array.isArray(text)) {
+            text.forEach(function (part) {
+                this._applyText(parentNode, part);
+            }.bind(this));
+        } else if (typeof text === 'object' && text !== null) {
+            var tspan = L.SVG.create('tspan');
+            parentNode.appendChild(tspan);
+
+            for (var attr in text) {
+                if (attr === 'text') {
+                    this._applyText(tspan, text[attr]);
+                } else {
+                    tspan.setAttribute(attr, text[attr]);
+                }
+            }
+        } else {
+            text = text.replace(/ /g, '\u00A0');  // Non breakable spaces
+            parentNode.appendChild(document.createTextNode(text));
+        }
     }
 };
 

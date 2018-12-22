@@ -38,6 +38,22 @@ With a GeoJSON containing lines, it becomes:
 
 ```
 
+You can also apply attributes only to parts of the text, e.g. to create multi colored labels:
+
+```javascript
+layer.setText([
+  { fill: 'red', text: 'Red' },
+  ' '
+  { style: 'fill: blue', text: 'Blue' }
+])
+```
+
+### `text` parameter
+The `text` parameter of `setText()` can either be:
+* A string: use this string as label
+* An object: use value of key 'text' as content (which can be either string, object or array), other key/value pairs as attributes for a `tspan` SVG node.
+* An array: The label consists of several parts, where each part can either be a string, an object or an array.
+
 ### Options
 
 * `repeat` Specifies if the text should be repeated along the polyline (Default: `false`). Specify `repeat` as float to set the distance between each repetition in pixels (will be approximated by spaces).
