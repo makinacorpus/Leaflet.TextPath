@@ -140,11 +140,13 @@ var PolylineTextPath = {
                 } else {
                     finalText.push({ text: turnText(text), rotate: 180 });
                 }
+            } else if (options.orientation === 'flip') {
+                finalText.push({ text: turnText(text), rotate: 180 });
             } else {
                 finalText = [ text ];
             }
         } else {
-            if (options.orientation === 'auto') {
+            if (options.orientation === 'auto' || options.orientation === 'flip') {
                 var textTurned = turnText(text)
             }
 
@@ -190,6 +192,8 @@ var PolylineTextPath = {
                     } else {
                         finalText.push({ text: textTurned, rotate: 180 });
                     }
+                } else if (options.orientation === 'flip') {
+                    finalText.push({ text: textTurned, rotate: 180 });
                 } else {
                     finalText.push(text);
                 }
@@ -227,13 +231,11 @@ var PolylineTextPath = {
         if (options.orientation) {
             var rotateAngle = 0;
             switch (options.orientation) {
-                case 'flip':
-                    rotateAngle = 180;
-                    break;
                 case 'perpendicular':
                     rotateAngle = 90;
                     break;
                 case 'auto':
+                case 'flip':
                     rotateAngle = 0;
                     break;
                 default:
