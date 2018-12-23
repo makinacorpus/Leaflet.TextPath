@@ -120,8 +120,6 @@ var PolylineTextPath = {
         }
 
         if (options.repeat === false) {
-            finalText = [ text ];
-
             /* Center text according to the path's bounding box */
             if (options.center) {
                 if (textLength === null) {
@@ -131,9 +129,23 @@ var PolylineTextPath = {
                 /* Set the position for the left side of the textNode */
                 dx = Math.max(0, (pathLength / 2) - (textLength / 2));
             }
+
+            if (options.orientation === 'auto') {
+                var poiBegin = this._path.getPointAtLength(dx)
+                var poiEnd = this._path.getPointAtLength(dx + textLength)
+                var leftToRight = poiEnd.x >= poiBegin.x
+
+                if (leftToRight) {
+                    finalText.push(text);
+                } else {
+                    finalText.push({ text: turnText(text), rotate: 180 });
+                }
+            } else {
+                finalText = [ text ];
+            }
         } else {
-            if (!Array.isArray(text)) {
-                text = [ text ]
+            if (options.orientation === 'auto') {
+                var textTurned = turnText(text)
             }
 
             /* Compute single pattern length */
@@ -149,8 +161,10 @@ var PolylineTextPath = {
 
             /* Create string as long as path */
             var repeatDistance = parseFloat(options.repeat) || 0
+            var pos = 0
             var spacingBalance = 0
             var repeatCount = Math.floor((pathLength + repeatDistance) / (textLength + repeatDistance)) || 1;
+            var finalText = []
 
             /* Calculate the position for the left side of the textNode */
             if (options.center) {
@@ -162,10 +176,25 @@ var PolylineTextPath = {
                 if (i > 0) {
                     spacesCount = Math.round((repeatDistance + spacingBalance) / slength);
                     spacingBalance = repeatDistance - (spacesCount * slength);
+                    pos += spacesCount * slength
                     finalText.push('\u00A0'.repeat(spacesCount));
                 }
 
-                finalText.push(text);
+                if (options.orientation === 'auto') {
+                    var poiBegin = this._path.getPointAtLength(pos)
+                    var poiEnd = this._path.getPointAtLength(pos + textLength)
+                    var leftToRight = poiEnd.x >= poiBegin.x
+
+                    if (leftToRight) {
+                        finalText.push(text);
+                    } else {
+                        finalText.push({ text: textTurned, rotate: 180 });
+                    }
+                } else {
+                    finalText.push(text);
+                }
+
+                pos += textLength
             }
         }
 
@@ -203,6 +232,9 @@ var PolylineTextPath = {
                     break;
                 case 'perpendicular':
                     rotateAngle = 90;
+                    break;
+                case 'auto':
+                    rotateAngle = 0;
                     break;
                 default:
                     rotateAngle = options.orientation;
@@ -267,6 +299,23 @@ L.LayerGroup.include({
     }
 });
 
-
+function turnText (text) {
+    if (Array.isArray(text)) {
+        return text
+            .slice().reverse()
+            .map(function (part) {
+                return turnText(part)
+            })
+    } else if (typeof text === 'object' && text !== null) {
+        var ret = {}
+        for (var attr in text) {
+            ret[attr] = text[attr]
+        }
+        ret.text = turnText(ret.text)
+        return ret
+    } else {
+        return text.split('').reverse().join('')
+    }
+}
 
 })();

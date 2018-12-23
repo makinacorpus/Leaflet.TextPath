@@ -64,6 +64,7 @@ The `text` parameter of `setText()` can either be:
     - {orientation: angle} - rotate to a specified angle (e.g. {orientation: 15})
     - {orientation: flip} - filps the text 180deg correction for upside down text placement on west -> east lines
     - {orientation: perpendicular} - places text at right angles to the line.
+    - {orientation: auto} - flips the text on (part of) ways running west to east, so that they are readable upside down.
 * `allowCrop` If the line is too short to display the whole text, crop the text. If false, don't show the text at all. (Default: true).
 
 * `attributes` Object containing the attributes applied to the `text` tag. Check valid attributes [here](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/text#Attributes) (Default: `{}`)
