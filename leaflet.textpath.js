@@ -101,20 +101,47 @@ var PolylineTextPath = {
         var svg = this._map._renderer._container;
         this._path.setAttribute('id', id);
 
-        var textLength = null
+        var textLength = null;
+        var pathLength = null;
+        var finalText = [];
+        var dx = 0
 
         if (!options.allowCrop) {
-          textLength = this._getLength(text, options);
+            if (textLength === null) {
+                textLength = this._getLength(text, options);
+            }
+            if (pathLength === null) {
+                pathLength = this._path.getTotalLength();
+            }
 
-          if (textLength > this._path.getTotalLength()) {
-            return this;
-          }
+            if (textLength > pathLength) {
+                return this;
+            }
         }
 
-        if (options.repeat !== false) {
+        if (options.repeat === false) {
+            finalText = [ text ];
+
+            /* Center text according to the path's bounding box */
+            if (options.center) {
+                if (textLength === null) {
+                    textLength = this._getLength(text, options);
+                }
+
+                /* Set the position for the left side of the textNode */
+                dx = Math.max(0, (pathLength / 2) - (textLength / 2));
+            }
+        } else {
+            if (!Array.isArray(text)) {
+                text = [ text ]
+            }
+
             /* Compute single pattern length */
             if (textLength === null) {
               textLength = this._getLength(text, options);
+            }
+            if (pathLength === null) {
+                pathLength = this._path.getTotalLength();
             }
 
             /* Compute length of a space */
@@ -123,16 +150,22 @@ var PolylineTextPath = {
             /* Create string as long as path */
             var repeatDistance = parseFloat(options.repeat) || 0
             var spacingBalance = 0
-            var singleText = text
-            for (var i = 1; i < Math.floor((this._path.getTotalLength() + repeatDistance) / (textLength + repeatDistance)); i++) {
-                var spacesCount = Math.round((repeatDistance + spacingBalance) / slength)
-                spacingBalance = repeatDistance - (spacesCount * slength)
+            var repeatCount = Math.floor((pathLength + repeatDistance) / (textLength + repeatDistance)) || 1;
 
-                if (Array.isArray(singleText)) {
-                    text = text.concat([{ text: '\u00A0'.repeat(spacesCount) }], singleText)
-                } else {
-                    text += '\u00A0'.repeat(spacesCount) + singleText
+            /* Calculate the position for the left side of the textNode */
+            if (options.center) {
+                dx = Math.max(0, (pathLength - textLength * repeatCount - repeatDistance * (repeatCount - 1))  / 2);
+            }
+
+            for (var i = 0; i < repeatCount; i++) {
+                var spacesCount = 0
+                if (i > 0) {
+                    spacesCount = Math.round((repeatDistance + spacingBalance) / slength);
+                    spacingBalance = repeatDistance - (spacesCount * slength);
+                    finalText.push('\u00A0'.repeat(spacesCount));
                 }
+
+                finalText.push(text);
             }
         }
 
@@ -146,23 +179,19 @@ var PolylineTextPath = {
         textNode.setAttribute('dy', dy);
         for (var attr in options.attributes)
             textNode.setAttribute(attr, options.attributes[attr]);
-        this._applyText(textPath, text);
+        this._applyText(textPath, finalText);
         textNode.appendChild(textPath);
         this._textNode = textNode;
+
+        if (dx !== 0) {
+            textNode.setAttribute('dx', dx);
+        }
 
         if (options.below) {
             svg.insertBefore(textNode, svg.firstChild);
         }
         else {
             svg.appendChild(textNode);
-        }
-
-        /* Center text according to the path's bounding box */
-        if (options.center) {
-            var textLength = textNode.getComputedTextLength();
-            var pathLength = this._path.getTotalLength();
-            /* Set the position for the left side of the textNode */
-            textNode.setAttribute('dx', ((pathLength / 2) - (textLength / 2)));
         }
 
         /* Change label rotation (if required) */
