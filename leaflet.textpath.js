@@ -146,14 +146,16 @@ var PolylineTextPath = {
                 finalText = [ text ];
             }
         } else {
-            if (options.orientation === 'auto' || options.orientation === 'flip') {
-                var textTurned = turnText(text)
-            }
-
             /* Compute single pattern length */
             if (textLength === null) {
               textLength = this._getLength(text, options);
             }
+
+            if (options.orientation === 'auto' || options.orientation === 'flip') {
+                var textTurned = turnText(options.turnedText || text)
+                var textLengthTurned = this._getLength(options.turnedText || text, options)
+            }
+
             if (pathLength === null) {
                 pathLength = this._path.getTotalLength();
             }
@@ -173,7 +175,8 @@ var PolylineTextPath = {
                 dx = Math.max(0, (pathLength - textLength * repeatCount - repeatDistance * (repeatCount - 1))  / 2);
             }
 
-            for (var i = 0; i < repeatCount; i++) {
+            var i = 0;
+            do {
                 var spacesCount = 0
                 if (i > 0) {
                     spacesCount = Math.round((repeatDistance + spacingBalance) / slength);
@@ -189,17 +192,21 @@ var PolylineTextPath = {
 
                     if (leftToRight) {
                         finalText.push(text);
+                        pos += textLength
                     } else {
                         finalText.push({ text: textTurned, rotate: 180 });
+                        pos += textLengthTurned
                     }
                 } else if (options.orientation === 'flip') {
                     finalText.push({ text: textTurned, rotate: 180 });
+                    pos += textLengthTurned
                 } else {
                     finalText.push(text);
+                    pos += textLength
                 }
 
-                pos += textLength
-            }
+                i++
+            } while (pos + repeatDistance + textLength < pathLength);
         }
 
         /* Put it along the path using textPath */

@@ -411,13 +411,18 @@
         L.geoJson(road, {
             onEachFeature: function (feature, layer) {
                 layer.setText(
-                    'Road',
+                    [ 'Road', { text: ' ⯈', fill: 'red' } ],
                     {
                         repeat: 20,
                         center: true,
-                        offset: 4,
+                        offset: 0,
                         orientation: 'auto',
-                        attributes: { 'font-size': '8pt', 'font-weight': 'bold' }
+                        attributes: {
+                          'font-size': '8pt',
+                          'font-weight': 'bold',
+                          'dominant-baseline': 'middle',
+                        },
+                        turnedText: [ { text: '⯇ ', fill: 'blue' }, 'Road' ],
                     }
                 );
             },
