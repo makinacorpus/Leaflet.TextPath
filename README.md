@@ -59,7 +59,7 @@ The `text` parameter of `setText()` can either be:
 * `repeat` Specifies if the text should be repeated along the polyline (Default: `false`). Specify `repeat` as float to set the distance between each repetition in pixels (will be approximated by spaces).
 * `center` Centers the text according to the polyline's bounding box  (Default: `false`)
 * `below` Show text below the path (Default: false)
-* `offset` Set an offset to position text relative to the polyline (Default: 0)
+* `offset` Set an offset to position text relative to the polyline (Default: width of stroke)
 * `orientation` Rotate text.  (Default: 0)
     - {orientation: angle} - rotate to a specified angle (e.g. {orientation: 15})
     - {orientation: flip} - flips the text 180deg correction for upside down text placement on west -> east lines
