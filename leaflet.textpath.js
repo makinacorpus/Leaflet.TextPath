@@ -119,7 +119,7 @@ var PolylineTextPath = {
             }
         }
 
-        if (options.repeat === false) {
+        if (typeof options.repeat === 'undefined' || options.repeat === false) {
             /* Center text according to the path's bounding box */
             if (options.center) {
                 if (textLength === null) {
