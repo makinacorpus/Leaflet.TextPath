@@ -11,6 +11,7 @@ var __onAdd = L.Polyline.prototype.onAdd,
     __updatePath = L.Polyline.prototype._updatePath,
     __bringToFront = L.Polyline.prototype.bringToFront;
 
+var _getLengthCache = {}
 
 var PolylineTextPath = {
 
@@ -44,6 +45,28 @@ var PolylineTextPath = {
         }
     },
 
+    _getLength: function (text, options) {
+        var cacheId = JSON.stringify(text) + '|' + JSON.stringify(options.attributes)
+
+        if (cacheId in _getLengthCache) {
+          return _getLengthCache[cacheId]
+        }
+
+        var svg = this._map._renderer._container;
+
+        var pattern = L.SVG.create('text');
+        for (var attr in options.attributes)
+            pattern.setAttribute(attr, options.attributes[attr]);
+        this._applyText(pattern, text);
+        svg.appendChild(pattern);
+        var length = pattern.getComputedTextLength();
+        svg.removeChild(pattern);
+
+        _getLengthCache[cacheId] = length
+
+        return length;
+    },
+
     setText: function (text, options) {
         this._text = text;
         this._textOptions = options;
@@ -59,6 +82,7 @@ var PolylineTextPath = {
             fillColor: 'black',
             attributes: {},
             below: false,
+            allowCrop: true
         };
         options = L.Util.extend(defaults, options);
 
@@ -73,38 +97,135 @@ var PolylineTextPath = {
             return this;
         }
 
-        text = text.replace(/ /g, '\u00A0');  // Non breakable spaces
         var id = 'pathdef-' + L.Util.stamp(this);
         var svg = this._map._renderer._container;
         this._path.setAttribute('id', id);
 
-        if (options.repeat) {
+        var textLength = null;
+        var pathLength = null;
+        var finalText = [];
+        var dx = 0
+
+        if (!options.allowCrop) {
+            if (textLength === null) {
+                textLength = this._getLength(text, options);
+            }
+            if (pathLength === null) {
+                pathLength = this._path.getTotalLength();
+            }
+
+            if (textLength > pathLength) {
+                return this;
+            }
+        }
+
+        if (options.repeat === false) {
+            /* Center text according to the path's bounding box */
+            if (options.center) {
+                if (textLength === null) {
+                    textLength = this._getLength(text, options);
+                }
+
+                /* Set the position for the left side of the textNode */
+                dx = Math.max(0, (pathLength / 2) - (textLength / 2));
+            }
+
+            if (options.orientation === 'auto') {
+                var poiBegin = this._path.getPointAtLength(dx)
+                var poiEnd = this._path.getPointAtLength(dx + textLength)
+                var leftToRight = poiEnd.x >= poiBegin.x
+
+                if (leftToRight) {
+                    finalText.push(text);
+                } else {
+                    finalText.push({ text: turnText(text), rotate: 180 });
+                }
+            } else if (options.orientation === 'flip') {
+                finalText.push({ text: turnText(text), rotate: 180 });
+            } else {
+                finalText = [ text ];
+            }
+        } else {
             /* Compute single pattern length */
-            var pattern = L.SVG.create('text');
-            for (var attr in options.attributes)
-                pattern.setAttribute(attr, options.attributes[attr]);
-            pattern.appendChild(document.createTextNode(text));
-            svg.appendChild(pattern);
-            var alength = pattern.getComputedTextLength();
-            svg.removeChild(pattern);
+            if (textLength === null) {
+              textLength = this._getLength(text, options);
+            }
+
+            if (options.orientation === 'auto' || options.orientation === 'flip') {
+                var textTurned = turnText(options.turnedText || text)
+                var textLengthTurned = this._getLength(options.turnedText || text, options)
+            }
+
+            if (pathLength === null) {
+                pathLength = this._path.getTotalLength();
+            }
+
+            /* Compute length of a space */
+            var slength = this._getLength('\u00A0', options);
 
             /* Create string as long as path */
-            text = new Array(Math.ceil(this._path.getTotalLength() / alength)).join(text);
+            var repeatDistance = parseFloat(options.repeat) || 0
+            var pos = 0
+            var spacingBalance = 0
+            var repeatCount = Math.floor((pathLength + repeatDistance) / (textLength + repeatDistance)) || 1;
+            var finalText = []
+
+            /* Calculate the position for the left side of the textNode */
+            if (options.center) {
+                dx = Math.max(0, (pathLength - textLength * repeatCount - repeatDistance * (repeatCount - 1))  / 2);
+            }
+
+            var i = 0;
+            do {
+                var spacesCount = 0
+                if (i > 0) {
+                    spacesCount = Math.round((repeatDistance + spacingBalance) / slength);
+                    spacingBalance = repeatDistance - (spacesCount * slength);
+                    pos += spacesCount * slength
+                    finalText.push('\u00A0'.repeat(spacesCount));
+                }
+
+                if (options.orientation === 'auto') {
+                    var poiBegin = this._path.getPointAtLength(pos)
+                    var poiEnd = this._path.getPointAtLength(pos + textLength)
+                    var leftToRight = poiEnd.x >= poiBegin.x
+
+                    if (leftToRight) {
+                        finalText.push(text);
+                        pos += textLength
+                    } else {
+                        finalText.push({ text: textTurned, rotate: 180 });
+                        pos += textLengthTurned
+                    }
+                } else if (options.orientation === 'flip') {
+                    finalText.push({ text: textTurned, rotate: 180 });
+                    pos += textLengthTurned
+                } else {
+                    finalText.push(text);
+                    pos += textLength
+                }
+
+                i++
+            } while (pos + repeatDistance + textLength < pathLength);
         }
 
         /* Put it along the path using textPath */
         var textNode = L.SVG.create('text'),
             textPath = L.SVG.create('textPath');
 
-        var dy = options.offset || this._path.getAttribute('stroke-width');
+        var dy = 'offset' in options ? options.offset : this._path.getAttribute('stroke-width');
 
         textPath.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", '#'+id);
         textNode.setAttribute('dy', dy);
         for (var attr in options.attributes)
             textNode.setAttribute(attr, options.attributes[attr]);
-        textPath.appendChild(document.createTextNode(text));
+        this._applyText(textPath, finalText);
         textNode.appendChild(textPath);
         this._textNode = textNode;
+
+        if (dx !== 0) {
+            textNode.setAttribute('dx', dx);
+        }
 
         if (options.below) {
             svg.insertBefore(textNode, svg.firstChild);
@@ -113,23 +234,16 @@ var PolylineTextPath = {
             svg.appendChild(textNode);
         }
 
-        /* Center text according to the path's bounding box */
-        if (options.center) {
-            var textLength = textNode.getComputedTextLength();
-            var pathLength = this._path.getTotalLength();
-            /* Set the position for the left side of the textNode */
-            textNode.setAttribute('dx', ((pathLength / 2) - (textLength / 2)));
-        }
-
         /* Change label rotation (if required) */
         if (options.orientation) {
             var rotateAngle = 0;
             switch (options.orientation) {
-                case 'flip':
-                    rotateAngle = 180;
-                    break;
                 case 'perpendicular':
                     rotateAngle = 90;
+                    break;
+                case 'auto':
+                case 'flip':
+                    rotateAngle = 0;
                     break;
                 default:
                     rotateAngle = options.orientation;
@@ -154,6 +268,28 @@ var PolylineTextPath = {
         }
 
         return this;
+    },
+
+    _applyText: function(parentNode, text) {
+        if (Array.isArray(text)) {
+            text.forEach(function (part) {
+                this._applyText(parentNode, part);
+            }.bind(this));
+        } else if (typeof text === 'object' && text !== null) {
+            var tspan = L.SVG.create('tspan');
+            parentNode.appendChild(tspan);
+
+            for (var attr in text) {
+                if (attr === 'text') {
+                    this._applyText(tspan, text[attr]);
+                } else {
+                    tspan.setAttribute(attr, text[attr]);
+                }
+            }
+        } else {
+            text = text.replace(/ /g, '\u00A0');  // Non breakable spaces
+            parentNode.appendChild(document.createTextNode(text));
+        }
     }
 };
 
@@ -170,6 +306,23 @@ L.LayerGroup.include({
     }
 });
 
-
+function turnText (text) {
+    if (Array.isArray(text)) {
+        return text
+            .slice().reverse()
+            .map(function (part) {
+                return turnText(part)
+            })
+    } else if (typeof text === 'object' && text !== null) {
+        var ret = {}
+        for (var attr in text) {
+            ret[attr] = text[attr]
+        }
+        ret.text = turnText(ret.text)
+        return ret
+    } else {
+        return text.split('').reverse().join('')
+    }
+}
 
 })();
