@@ -38,16 +38,35 @@ With a GeoJSON containing lines, it becomes:
 
 ```
 
+You can also apply attributes only to parts of the text, e.g. to create multi colored labels:
+
+```javascript
+layer.setText([
+  { fill: 'red', text: 'Red' },
+  ' '
+  { style: 'fill: blue', text: 'Blue' }
+])
+```
+
+### `text` parameter
+The `text` parameter of `setText()` can either be:
+* A string: use this string as label
+* An object: use value of key 'text' as content (which can be either string, object or array), other key/value pairs as attributes for a `tspan` SVG node.
+* An array: The label consists of several parts, where each part can either be a string, an object or an array.
+
 ### Options
 
-* `repeat` Specifies if the text should be repeated along the polyline (Default: `false`)
+* `repeat` Specifies if the text should be repeated along the polyline (Default: `false`). Specify `repeat` as float to set the distance between each repetition in pixels (will be approximated by spaces).
 * `center` Centers the text according to the polyline's bounding box  (Default: `false`)
 * `below` Show text below the path (Default: false)
-* `offset` Set an offset to position text relative to the polyline (Default: 0)
+* `offset` Set an offset to position text relative to the polyline (Default: width of stroke)
 * `orientation` Rotate text.  (Default: 0)
     - {orientation: angle} - rotate to a specified angle (e.g. {orientation: 15})
-    - {orientation: flip} - filps the text 180deg correction for upside down text placement on west -> east lines
+    - {orientation: flip} - flips the text 180deg correction for upside down text placement on west -> east lines
     - {orientation: perpendicular} - places text at right angles to the line.
+    - {orientation: auto} - flips the text on (part of) ways running west to east, so that they are readable upside down.
+* `allowCrop` If the line is too short to display the whole text, crop the text. If false, don't show the text at all. (Default: true).
+* `turnedText` When orientation=auto is used, use this text for east -> west lines.
 
 * `attributes` Object containing the attributes applied to the `text` tag. Check valid attributes [here](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/text#Attributes) (Default: `{}`)
 
