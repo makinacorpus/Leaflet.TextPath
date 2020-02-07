@@ -1,7 +1,8 @@
-1.2.2-dev0
+1.2.2 / 2020-02-07
 ==================
 
   * Fix mouse events
+  * Fix repeated text on 0 length path
 
 1.2.1 / 2018-06-22
 ==================
