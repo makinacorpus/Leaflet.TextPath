@@ -141,17 +141,15 @@ var PolylineTextPath = {
         }
 
         /* Initialize mouse events for the additional nodes */
-        if (this.options.clickable) {
+        if (this.options.interactive) {
             if (L.Browser.svg || !L.Browser.vml) {
-                textPath.setAttribute('class', 'leaflet-clickable');
+                textPath.setAttribute('class', 'leaflet-interactive');
             }
 
-            L.DomEvent.on(textNode, 'click', this._onMouseClick, this);
-
-            var events = ['dblclick', 'mousedown', 'mouseover',
+            var events = ['click', 'dblclick', 'mousedown', 'mouseover',
                           'mouseout', 'mousemove', 'contextmenu'];
             for (var i = 0; i < events.length; i++) {
-                L.DomEvent.on(textNode, events[i], this._fireMouseEvent, this);
+                L.DomEvent.on(textNode, events[i], this._fire, this);
             }
         }
 
