@@ -149,7 +149,7 @@ var PolylineTextPath = {
             var events = ['click', 'dblclick', 'mousedown', 'mouseover',
                           'mouseout', 'mousemove', 'contextmenu'];
             for (var i = 0; i < events.length; i++) {
-                L.DomEvent.on(textNode, events[i], this._fire, this);
+                L.DomEvent.on(textNode, events[i], this.fire, this);
             }
         }
 
