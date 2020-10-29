@@ -21,8 +21,8 @@ var PolylineTextPath = {
 
     onRemove: function (map) {
         map = map || this._map;
-        if (map && this._textNode && map._renderer._container)
-            map._renderer._container.removeChild(this._textNode);
+        if (map && this._textNode && this._renderer._container)
+            this._renderer._container.removeChild(this._textNode);
         __onRemove.call(this, map);
     },
 
@@ -65,7 +65,7 @@ var PolylineTextPath = {
         /* If empty text, hide */
         if (!text) {
             if (this._textNode && this._textNode.parentNode) {
-                this._map._renderer._container.removeChild(this._textNode);
+                this._renderer._container.removeChild(this._textNode);
                 
                 /* delete the node, so it will not be removed a 2nd time if the layer is later removed from the map */
                 delete this._textNode;
@@ -75,7 +75,7 @@ var PolylineTextPath = {
 
         text = text.replace(/ /g, '\u00A0');  // Non breakable spaces
         var id = 'pathdef-' + L.Util.stamp(this);
-        var svg = this._map._renderer._container;
+        var svg = this._renderer._container;
         this._path.setAttribute('id', id);
 
         if (options.repeat) {
