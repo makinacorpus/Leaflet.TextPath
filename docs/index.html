@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1 class="demo-name"></h1>
+        <div class="menu">
+            <a class="npm"><img class="icon" src="./logo/npm.svg" />
+                <div class="title"></div>
+            </a>
+            <a class="sources"><img class="icon" src="./logo/github.svg" />
+                <div class="title">Github</div>
+            </a>
+            <a class="logo" href="http://makina-corpus.com"><img class="logo" src="./logo/makina.svg"
+                    alt="Makina Corpus logo" /></a>
+            <button class="menu-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </header>
+    <main>
+        <iframe id="demoIframe" title="Demo Iframe" width="100%" height="100%" src="./example.html">
+        </iframe>
+        <aside class="side closed">
+            <zero-md>
+                <!-- Set `data-dedent` to remove indentation -->
+                <script class= "moreInfo" type="text/markdown" data-dedent>
+                </script>
+                <template>
+                    <link rel="stylesheet"
+                        href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css" />
+                </template>
+            </zero-md>
+            <h1>Description</h1>
+            <zero-md class="readme-md">
+                <template>
+                    <style>
+                        h1 {
+                            display: none;
+                        }
+
+                        h2,
+                        h3 {
+                            margin-top: 10px !important;
+                            padding: 0.7px !important;
+                            margin-left: 5px !important;
+                            line-height: 1.2 !important;
+                        }
+
+                        p {
+                            margin-left: 4px !important;
+                        }
+
+                        .demo {
+                            display: none;
+                        }
+                    </style>
+                    <link rel="stylesheet"
+                        href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css" />
+                    <link rel="stylesheet"
+                        href="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-dracula.min.css" />
+                </template>
+            </zero-md>
+        </aside>
+    </main>
+</body>
+<script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"></script>
+<script>
+    function toggleMenu() {
+        var toggle = document.querySelector('.menu-toggle');
+        var menu = document.querySelector('.side');
+        toggle.classList.toggle('close');
+        menu.classList.toggle('closed');
+    }
+
+    function initMenu() {
+        var toggle = document.querySelector('.menu-toggle');
+        toggle.addEventListener('click', toggleMenu);
+    }
+
+    window.addEventListener('load', function () {
+        initMenu();
+    });
+</script>
+<script src="meta.js"></script>
+
+</html>
