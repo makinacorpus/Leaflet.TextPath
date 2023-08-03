@@ -3,7 +3,20 @@ Leaflet.TextPath
 
 Shows a text along a Polyline.
 
-Check out the [demo](https://makinacorpus.github.io/Leaflet.TextPath/) !
+<p align="center">
+<a href="https://www.npmjs.com/package/leaflet-textpath"><img alt="npm" src="https://img.shields.io/npm/dt/leaflet-textpath"></a>
+<a href="https://www.npmjs.com/package/leaflet-textpath"><img alt="npm" src= "https://img.shields.io/npm/v/leaflet-textpath?color=red"></a>
+</p>
+
+<div class="demo">
+<p align="center"><img src="./screenshot.png"></p>
+<p align="center">Check out the <a href="https://makinacorpus.github.io/Leaflet.TextPath/">demo</a> ! </p>
+</div>
+
+Install
+-----
+install it via your favorite package manager:
+* `npm i leaflet-textpath`
 
 Leaflet versions
 -----
@@ -50,11 +63,6 @@ With a GeoJSON containing lines, it becomes:
     - {orientation: perpendicular} - places text at right angles to the line.
 
 * `attributes` Object containing the attributes applied to the `text` tag. Check valid attributes [here](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/text#Attributes) (Default: `{}`)
-
-Screenshot
-----------
-
-![screenshot](https://raw.github.com/makinacorpus/Leaflet.TextPath/gh-pages/screenshot.png)
 
 Credits
 -------
