@@ -1,5 +1,5 @@
 const logJson = async () => {
-    const reponse = await fetch('meta.json');
+    const reponse = await fetch('docs/meta.json');
     return await reponse.json();
 }
 
