@@ -8,7 +8,7 @@ Check out the [demo](https://makinacorpus.github.io/Leaflet.TextPath/) !
 Leaflet versions
 -----
 
-The version on the `gh-pages` branch targets Leaflet `1.3.1`.
+The version on the github page (demo) currently targets Leaflet `1.3.1`.
 
 Usage
 -----
