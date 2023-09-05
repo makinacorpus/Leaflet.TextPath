@@ -59,54 +59,7 @@ Screenshot
 Credits
 -------
 
-The main idea comes from Tom Mac Wright's *[Getting serious about SVG](http://mapbox.com/osmdev/2012/11/20/getting-serious-about-svg/)*
-
-
-Changelog
----------
-
-### development ###
-
-* Nothing changed yet.
-
-### 1.1.0 ###
-
-* Add the orientation option (#27, thanks @kirkau)
-
-### 1.0.2 ###
-
-* Allow HTTP and HTTPS to access the demo (#39, thanks @sonny89 and @leplatrem)
-
-### 1.0.1 ###
-
-* Fix text centering for vertical lines (#33, #34, #38, thanks @msgoloborodov)
-
-### 1.0.0 ###
-
-**Breaking changes**
-
-* Text is now shown on top by default. Set option ``below`` to true to put the text below the layer.
-
-### 0.2.2 ###
-
-* Fix bug when removing layer whose text was removed (fixes #18) (thanks Victor Gomes)
-* Fix path width when using options.center (fixes #17) (thanks Brent Miller).
-
-### 0.2.1 ###
-
-* Fix layer order (fixes #5) (thanks Albin Larsson)
-
-### 0.2.0 ###
-
-* Stay on top after bringToFront
-* Clean-up and fix `onAdd` and `onRemove`
-* Fire mouse events from underlying text layer (thanks Lewis Christie)
-
-### 0.1.0 ###
-
-* Initial working version
-
-
+The main idea comes from Tom Mac Wright's *[Getting serious about SVG](https://web.archive.org/web/20130312131812/http://mapbox.com/osmdev/2012/11/20/getting-serious-about-svg/)*
 
 Authors
 -------

@@ -1,7 +1,7 @@
 /*
  * Leaflet.TextPath - Shows text along a polyline
  * Inspired by Tom Mac Wright article :
- * http://mapbox.com/osmdev/2012/11/20/getting-serious-about-svg/
+ * https://web.archive.org/web/20130312131812/http://mapbox.com/osmdev/2012/11/20/getting-serious-about-svg/
  */
 
 (function () {
