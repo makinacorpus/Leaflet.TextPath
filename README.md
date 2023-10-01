@@ -16,7 +16,8 @@ Shows a text along a Polyline.
 Install
 -----
 install it via your favorite package manager:
-* `npm i leaflet-textpath`
+
+`npm i leaflet-textpath`
 
 Leaflet versions
 -----
