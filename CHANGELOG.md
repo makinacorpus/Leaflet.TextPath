@@ -1,3 +1,9 @@
+Next version / Unreleased
+==================
+
+  * Update changelog and demo page
+  * Fix this._map._renderer unedefined if using panes (#87)
+
 1.2.3 / 2020-02-07
 ==================
 
