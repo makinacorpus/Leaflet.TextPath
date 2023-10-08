@@ -1,5 +1,6 @@
 Next version / Unreleased
 ==================
+
   * Update changelog and demo page
   * Fix this._map._renderer unedefined if using panes (#87)
   * Add option to set repeat text distance
