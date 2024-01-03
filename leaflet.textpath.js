@@ -79,6 +79,9 @@ var PolylineTextPath = {
         this._path.setAttribute('id', id);
 
         if (options.repeat) {
+            if (options.repeat!=true && options.repeat>=1) {
+                text=text.padStart(options.repeat, '\u00A0');
+            }
             /* Compute single pattern length */
             var pattern = L.SVG.create('text');
             for (var attr in options.attributes)
