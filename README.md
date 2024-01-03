@@ -75,4 +75,4 @@ Authors
 
 Many thanks to [all contributors](https://github.com/makinacorpus/Leaflet.TextPath/graphs/contributors) !
 
-[![Makina Corpus](http://depot.makina-corpus.org/public/logo.gif)](http://makinacorpus.com)
+[![Makina Corpus](https://geotrek.fr/assets/img/logo_makina.svg)](http://makinacorpus.com)
