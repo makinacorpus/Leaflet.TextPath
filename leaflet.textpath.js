@@ -61,6 +61,12 @@ var PolylineTextPath = {
             below: false,
         };
         options = L.Util.extend(defaults, options);
+        const style = window.getComputedStyle(this._path);
+        if (style.getPropertyValue('display') === 'none') {
+            // If we're temporarily hidden by a CSS rule, the text path won't render right
+            // Just wait until we're visible again.
+            return this;
+        }
 
         /* If empty text, hide */
         if (!text) {
