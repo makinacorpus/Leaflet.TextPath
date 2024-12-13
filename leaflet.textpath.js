@@ -61,7 +61,7 @@ var PolylineTextPath = {
             below: false,
         };
         options = L.Util.extend(defaults, options);
-        const style = window.getComputedStyle(this._path);
+        let style = window.getComputedStyle(this._path);
         if (style.getPropertyValue('display') === 'none') {
             // If we're temporarily hidden by a CSS rule, the text path won't render right
             // Just wait until we're visible again.
@@ -87,8 +87,11 @@ var PolylineTextPath = {
         if (options.repeat) {
             /* Compute single pattern length */
             var pattern = L.SVG.create('text');
-            for (var attr in options.attributes)
-                pattern.setAttribute(attr, options.attributes[attr]);
+            for (var attr in options.attributes) {
+                if (!(options.attributes.patternExcludeAttr && options.attributes.patternExcludeAttr[attr])) {
+                    pattern.setAttribute(attr, options.attributes[attr]);
+                }
+            }
             pattern.appendChild(document.createTextNode(text));
             svg.appendChild(pattern);
             var alength = pattern.getComputedTextLength();
