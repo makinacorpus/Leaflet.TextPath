@@ -1,3 +1,7 @@
+# 1.3.1 / 2026-10-22
+
+- Fix text left on the map by setText(null) after repeated setText() calls (#101)
+
 # 1.3.0 / 2025/06/23
 
 - Add option to set repeat text distance
