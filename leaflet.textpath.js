@@ -101,7 +101,7 @@ var PolylineTextPath = {
         var textNode = L.SVG.create('text'),
             textPath = L.SVG.create('textPath');
 
-        var dy = options.offset || this._path.getAttribute('stroke-width');
+        var dy = options.offset != null ? options.offset : this._path.getAttribute('stroke-width');
 
         textPath.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", '#'+id);
         textNode.setAttribute('dy', dy);
