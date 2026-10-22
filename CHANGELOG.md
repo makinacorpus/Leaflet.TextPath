@@ -1,3 +1,7 @@
+# 1.3.2 / 2026-10-22
+
+- Honor `offset: 0` in setText: it no longer falls back to the stroke width (#73)
+
 # 1.3.1 / 2026-10-22
 
 - Fix text left on the map by setText(null) after repeated setText() calls (#101)
